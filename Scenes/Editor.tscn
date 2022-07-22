@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Fonts/UbuntuCondensed-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/Editor.gd" type="Script" id=2]
+[ext_resource path="res://Scenes/Tag.tscn" type="PackedScene" id=3]
 
 [sub_resource type="DynamicFont" id=2]
 size = 24
@@ -9,6 +10,9 @@ font_data = ExtResource( 1 )
 
 [sub_resource type="Theme" id=1]
 default_font = SubResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=3]
+bg_color = Color( 1, 1, 1, 1 )
 
 [node name="Editor" type="Control"]
 anchor_right = 1.0
@@ -39,15 +43,57 @@ rect_min_size = Vector2( 0, 200 )
 anchor_right = 1.0
 anchor_bottom = 1.0
 
-[node name="Control" type="Control" parent="Vbox/ControllerUI/VBoxContainer"]
+[node name="Editor" type="VBoxContainer" parent="Vbox/ControllerUI/VBoxContainer"]
 margin_right = 1024.0
-margin_bottom = 110.0
+margin_bottom = 96.0
 size_flags_vertical = 3
 
-[node name="slider" type="HBoxContainer" parent="Vbox/ControllerUI/VBoxContainer"]
-margin_top = 114.0
+[node name="Control" type="Control" parent="Vbox/ControllerUI/VBoxContainer/Editor"]
 margin_right = 1024.0
-margin_bottom = 148.0
+margin_bottom = 76.0
+size_flags_vertical = 3
+
+[node name="Tag" parent="Vbox/ControllerUI/VBoxContainer/Editor/Control" instance=ExtResource( 3 )]
+margin_left = 10.0
+margin_top = 34.0
+margin_right = 35.0
+margin_bottom = 59.0
+
+[node name="TimelineBg" type="Panel" parent="Vbox/ControllerUI/VBoxContainer/Editor/Control"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 6.0
+margin_top = 27.0
+margin_right = -6.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 0, 10 )
+custom_styles/panel = SubResource( 3 )
+
+[node name="Timeline" type="Panel" parent="Vbox/ControllerUI/VBoxContainer/Editor/Control"]
+modulate = Color( 0.121569, 0.380392, 0.203922, 1 )
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 6.0
+margin_top = 27.0
+margin_right = -918.0
+margin_bottom = 37.0
+rect_min_size = Vector2( 0, 5 )
+custom_styles/panel = SubResource( 3 )
+
+[node name="progress" type="HSlider" parent="Vbox/ControllerUI/VBoxContainer/Editor"]
+margin_top = 80.0
+margin_right = 1024.0
+margin_bottom = 96.0
+size_flags_horizontal = 3
+size_flags_vertical = 4
+step = 0.0
+
+[node name="slider" type="HBoxContainer" parent="Vbox/ControllerUI/VBoxContainer"]
+margin_top = 100.0
+margin_right = 1024.0
+margin_bottom = 134.0
 custom_constants/separation = 10
 
 [node name="space2" type="Control" parent="Vbox/ControllerUI/VBoxContainer/slider"]
@@ -55,51 +101,42 @@ margin_right = 10.0
 margin_bottom = 34.0
 rect_min_size = Vector2( 10, 0 )
 
-[node name="cursor" type="Label" parent="Vbox/ControllerUI/VBoxContainer/slider"]
-margin_left = 20.0
-margin_top = 3.0
-margin_right = 70.0
-margin_bottom = 31.0
-rect_min_size = Vector2( 50, 0 )
-text = "00.00"
-
-[node name="progress" type="HSlider" parent="Vbox/ControllerUI/VBoxContainer/slider"]
-margin_left = 80.0
-margin_top = 9.0
-margin_right = 795.0
-margin_bottom = 25.0
-size_flags_horizontal = 3
-size_flags_vertical = 4
-step = 0.0
-
-[node name="length" type="Label" parent="Vbox/ControllerUI/VBoxContainer/slider"]
-margin_left = 805.0
-margin_top = 3.0
-margin_right = 855.0
-margin_bottom = 31.0
-rect_min_size = Vector2( 50, 0 )
-text = "04.20"
-
 [node name="Play" type="Button" parent="Vbox/ControllerUI/VBoxContainer/slider"]
-margin_left = 865.0
-margin_right = 935.0
+margin_left = 20.0
+margin_right = 90.0
 margin_bottom = 34.0
 rect_min_size = Vector2( 70, 0 )
 size_flags_vertical = 5
 text = "PLAY"
 
 [node name="Stop" type="Button" parent="Vbox/ControllerUI/VBoxContainer/slider"]
-margin_left = 945.0
-margin_right = 1004.0
+margin_left = 100.0
+margin_right = 170.0
 margin_bottom = 34.0
+rect_min_size = Vector2( 70, 0 )
 size_flags_vertical = 5
 text = "STOP"
 
+[node name="cursor" type="Label" parent="Vbox/ControllerUI/VBoxContainer/slider"]
+margin_left = 180.0
+margin_top = 3.0
+margin_right = 230.0
+margin_bottom = 31.0
+rect_min_size = Vector2( 50, 0 )
+text = "00.00"
+align = 1
+
 [node name="space" type="Control" parent="Vbox/ControllerUI/VBoxContainer/slider"]
-margin_left = 1014.0
-margin_right = 1024.0
+margin_left = 240.0
+margin_right = 250.0
 margin_bottom = 34.0
 rect_min_size = Vector2( 10, 0 )
+
+[node name="space2" type="Control" parent="Vbox/ControllerUI/VBoxContainer"]
+margin_top = 138.0
+margin_right = 1024.0
+margin_bottom = 148.0
+rect_min_size = Vector2( 0, 10 )
 
 [node name="conroller" type="HBoxContainer" parent="Vbox/ControllerUI/VBoxContainer"]
 margin_top = 152.0
@@ -114,28 +151,30 @@ rect_min_size = Vector2( 10, 0 )
 
 [node name="Open" type="Button" parent="Vbox/ControllerUI/VBoxContainer/conroller"]
 margin_left = 20.0
-margin_right = 84.0
+margin_right = 90.0
 margin_bottom = 34.0
+rect_min_size = Vector2( 70, 0 )
 size_flags_vertical = 5
 text = "OPEN"
 
 [node name="Clear" type="Button" parent="Vbox/ControllerUI/VBoxContainer/conroller"]
-margin_left = 94.0
-margin_right = 162.0
+margin_left = 100.0
+margin_right = 170.0
 margin_bottom = 34.0
+rect_min_size = Vector2( 70, 0 )
 size_flags_vertical = 5
 text = "CLEAR"
 
 [node name="space2" type="Control" parent="Vbox/ControllerUI/VBoxContainer/conroller"]
-margin_left = 172.0
-margin_right = 182.0
+margin_left = 180.0
+margin_right = 190.0
 margin_bottom = 34.0
 rect_min_size = Vector2( 10, 0 )
 
 [node name="Label" type="Label" parent="Vbox/ControllerUI/VBoxContainer/conroller"]
-margin_left = 192.0
+margin_left = 200.0
 margin_top = 3.0
-margin_right = 382.0
+margin_right = 390.0
 margin_bottom = 31.0
 text = "No audio file selected"
 
@@ -152,9 +191,9 @@ window_title = "Open a File"
 mode = 0
 
 [node name="AudioPlayer" type="AudioStreamPlayer2D" parent="."]
-position = Vector2( 515, 233 )
+position = Vector2( 550, 200 )
 
-[connection signal="value_changed" from="Vbox/ControllerUI/VBoxContainer/slider/progress" to="." method="_on_progress_value_changed"]
+[connection signal="value_changed" from="Vbox/ControllerUI/VBoxContainer/Editor/progress" to="." method="_on_progress_value_changed"]
 [connection signal="pressed" from="Vbox/ControllerUI/VBoxContainer/slider/Play" to="." method="_on_Play_pressed"]
 [connection signal="pressed" from="Vbox/ControllerUI/VBoxContainer/slider/Stop" to="." method="_on_Stop_pressed"]
 [connection signal="pressed" from="Vbox/ControllerUI/VBoxContainer/conroller/Open" to="." method="_on_Open_pressed"]

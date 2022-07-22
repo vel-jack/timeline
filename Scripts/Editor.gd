@@ -3,27 +3,32 @@ extends Control
 # variables
 var playing = false
 var cur_pos = 0
+var audio_length_str = ""
+var audio_length= 0
 
 # onready 
-onready var progress = $Vbox/ControllerUI/VBoxContainer/slider/progress
+onready var progress = $Vbox/ControllerUI/VBoxContainer/Editor/progress
 onready var play = $Vbox/ControllerUI/VBoxContainer/slider/Play
 onready var stop = $Vbox/ControllerUI/VBoxContainer/slider/Stop
 onready var cursor = $Vbox/ControllerUI/VBoxContainer/slider/cursor
 onready var audio_player = $AudioPlayer
+onready var timeline = $Vbox/ControllerUI/VBoxContainer/Editor/Control/Timeline
+onready var timeline_bg =$Vbox/ControllerUI/VBoxContainer/Editor/Control/TimelineBg
 
 
 func _ready():
 	audio_player.stream = load("res://Assets/cool.mp3")
-	var a = audio_player.stream.get_length()
-	progress.max_value = int(a)
-	$Vbox/ControllerUI/VBoxContainer/slider/length.text = to_time(int(a))
+	audio_length = audio_player.stream.get_length()
+	progress.max_value = audio_length
+	audio_length_str = to_time(int(audio_length))
 	set_curser(0)
 
+
 func set_curser(t):
-	cursor.text = to_time(t);
+	cursor.text = to_time(t)+'/'+audio_length_str;
 
 func to_time(secs):
-	return str((secs/60)%60) + ":" + str(secs%60)
+	return "%02d:%02d" % [(secs/60)%60,secs%60]
 
 # warning-ignore:unused_argument
 func _process(delta):
@@ -31,6 +36,7 @@ func _process(delta):
 		var a = audio_player.get_playback_position()
 		set_curser(int(a))
 		progress.value = a
+		timeline.rect_size = Vector2(timeline_bg.rect_size.x* (a/audio_length*100)/100 ,10)
 	pass
 
 
