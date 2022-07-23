@@ -1,8 +1,24 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=25 format=2]
 
 [ext_resource path="res://Fonts/UbuntuCondensed-Regular.ttf" type="DynamicFontData" id=1]
 [ext_resource path="res://Scripts/Editor.gd" type="Script" id=2]
-[ext_resource path="res://Scenes/Tag.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Assets/Pose/4.png" type="Texture" id=3]
+[ext_resource path="res://Assets/Pose/7.png" type="Texture" id=4]
+[ext_resource path="res://Assets/Pose/2.png" type="Texture" id=5]
+[ext_resource path="res://Assets/Pose/6.png" type="Texture" id=6]
+[ext_resource path="res://Assets/Pose/1.png" type="Texture" id=7]
+[ext_resource path="res://Assets/Pose/8.png" type="Texture" id=8]
+[ext_resource path="res://Assets/Pose/3.png" type="Texture" id=9]
+[ext_resource path="res://Assets/Pose/5.png" type="Texture" id=10]
+[ext_resource path="res://Assets/Eyes/7.png" type="Texture" id=11]
+[ext_resource path="res://Assets/Eyes/4.png" type="Texture" id=12]
+[ext_resource path="res://Assets/Eyes/5.png" type="Texture" id=13]
+[ext_resource path="res://Assets/Eyes/1.png" type="Texture" id=14]
+[ext_resource path="res://Assets/Eyes/3.png" type="Texture" id=15]
+[ext_resource path="res://Assets/Eyes/2.png" type="Texture" id=16]
+[ext_resource path="res://Assets/Eyes/8.png" type="Texture" id=17]
+[ext_resource path="res://Assets/Eyes/6.png" type="Texture" id=18]
+[ext_resource path="res://Assets/Eyes/9.png" type="Texture" id=19]
 
 [sub_resource type="DynamicFont" id=2]
 size = 24
@@ -10,6 +26,22 @@ font_data = ExtResource( 1 )
 
 [sub_resource type="Theme" id=1]
 default_font = SubResource( 2 )
+
+[sub_resource type="StyleBoxFlat" id=4]
+bg_color = Color( 0.611765, 0.611765, 0.611765, 1 )
+
+[sub_resource type="SpriteFrames" id=5]
+animations = [ {
+"frames": [ ExtResource( 7 ), ExtResource( 5 ), ExtResource( 9 ), ExtResource( 3 ), ExtResource( 10 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 8 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 14 ), ExtResource( 19 ), ExtResource( 16 ), ExtResource( 15 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 18 ), ExtResource( 11 ), ExtResource( 17 ) ],
+"loop": true,
+"name": "eyes",
+"speed": 5.0
+} ]
 
 [sub_resource type="StyleBoxFlat" id=3]
 bg_color = Color( 1, 1, 1, 1 )
@@ -27,11 +59,24 @@ __meta__ = {
 "_edit_lock_": true
 }
 
-[node name="VideoUI" type="Control" parent="Vbox"]
+[node name="VideoUI" type="Panel" parent="Vbox"]
 margin_right = 1024.0
 margin_bottom = 396.0
 rect_min_size = Vector2( 0, 100 )
 size_flags_vertical = 3
+custom_styles/panel = SubResource( 4 )
+
+[node name="body" type="AnimatedSprite" parent="Vbox/VideoUI"]
+position = Vector2( 550, 200 )
+scale = Vector2( 0.619444, 0.619444 )
+frames = SubResource( 5 )
+
+[node name="eyes" type="AnimatedSprite" parent="Vbox/VideoUI"]
+position = Vector2( 550, 200 )
+scale = Vector2( 0.619444, 0.619444 )
+frames = SubResource( 5 )
+animation = "eyes"
+frame = 1
 
 [node name="ControllerUI" type="Panel" parent="Vbox"]
 margin_top = 400.0
@@ -53,12 +98,6 @@ margin_right = 1024.0
 margin_bottom = 76.0
 size_flags_vertical = 3
 
-[node name="Tag" parent="Vbox/ControllerUI/VBoxContainer/Editor/Control" instance=ExtResource( 3 )]
-margin_left = 10.0
-margin_top = 34.0
-margin_right = 35.0
-margin_bottom = 59.0
-
 [node name="TimelineBg" type="Panel" parent="Vbox/ControllerUI/VBoxContainer/Editor/Control"]
 anchor_top = 0.5
 anchor_right = 1.0
@@ -69,6 +108,12 @@ margin_right = -6.0
 margin_bottom = 37.0
 rect_min_size = Vector2( 0, 10 )
 custom_styles/panel = SubResource( 3 )
+
+[node name="Tags" type="Control" parent="Vbox/ControllerUI/VBoxContainer/Editor/Control/TimelineBg"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -12.0
+margin_bottom = -12.0
 
 [node name="Timeline" type="Panel" parent="Vbox/ControllerUI/VBoxContainer/Editor/Control"]
 modulate = Color( 0.121569, 0.380392, 0.203922, 1 )
@@ -117,7 +162,7 @@ rect_min_size = Vector2( 70, 0 )
 size_flags_vertical = 5
 text = "STOP"
 
-[node name="cursor" type="Label" parent="Vbox/ControllerUI/VBoxContainer/slider"]
+[node name="time" type="Label" parent="Vbox/ControllerUI/VBoxContainer/slider"]
 margin_left = 180.0
 margin_top = 3.0
 margin_right = 230.0
