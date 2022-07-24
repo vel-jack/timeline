@@ -5,7 +5,7 @@ var playing = false
 var cur_pos = 0
 var audio_length_str = ""
 var audio_length= 0
-var tags = {}
+
 
 # onready 
 onready var progress = $Vbox/ControllerUI/VBoxContainer/Editor/progress
@@ -39,8 +39,9 @@ func set_timeline(a):
 	timeline.rect_size = Vector2(timeline_bg.rect_size.x* (a/audio_length*100)/100 ,10)
 	progress.value = a
 	var x = int(timeline.rect_size.x)
-	if x in tags.keys():
-		body.frame = tags[x]
+	if x in Tags.tags.keys():
+		body.frame = Tags.tags[x]['body']
+		eyes.play(Tags.tags[x]['eye'])
 
 func to_time(secs):
 	return "%02d:%02d" % [(secs/60)%60,secs%60]
@@ -115,16 +116,36 @@ func _unhandled_key_input(event):
 					add_tag(6)
 				KEY_8:
 					add_tag(7)
+				KEY_Z:
+					add_eye('normal')
+				KEY_X:
+					add_eye('heart')
+				KEY_C:
+					add_eye('hurt')
+				KEY_V:
+					add_eye('sad')
+				KEY_B:
+					add_eye('what')
+				
 	else:
 		pressed =false
 
-
 func add_tag(n):
 	body.frame = n
+	var at = timeline.rect_size.x
 	var inst = _tag_scene.instance()
 	inst.num = n
-	var at = timeline.rect_size.x
-	tags[int(at)] = n
+	inst.at = int(at)
+	Tags.tags[int(at)] = {
+		'body':n,
+		'eye':'normal'
+	}
+	eyes.play('normal')
 	inst.rect_position = Vector2(at-14,-16)
 	tags_parent.add_child(inst)
-	pass
+
+func add_eye(eye):
+	var at = int(timeline.rect_size.x)
+	if Tags.tags.has(at):
+		Tags.tags[at]['eye'] = eye
+		eyes.play(eye)
