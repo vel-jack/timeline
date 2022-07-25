@@ -11,5 +11,6 @@ export_presets.cfg
 data_*/
 Assets/Eyes/
 Assets/Pose/
-Assets/cool.mp3
-Assets/cool.mp3.import
+Assets/data.json
+Audio/
+

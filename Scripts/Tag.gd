@@ -10,5 +10,5 @@ func set_num(n):
 
 func _on_Tag_pressed():
 # warning-ignore:return_value_discarded
-	Tags.tags.erase(at)
+	Common.tags.erase(at)
 	queue_free()
