@@ -198,3 +198,4 @@ position = Vector2( 550, 200 )
 [connection signal="pressed" from="Vbox/ControllerUI/VBoxContainer/Controller/Run" to="." method="_on_Run_pressed"]
 [connection signal="pressed" from="Vbox/ControllerUI/VBoxContainer/DataController/Load" to="." method="_on_Load_pressed"]
 [connection signal="pressed" from="Vbox/ControllerUI/VBoxContainer/DataController/Save" to="." method="_on_Save_pressed"]
+[connection signal="finished" from="AudioPlayer" to="." method="_on_AudioPlayer_finished"]

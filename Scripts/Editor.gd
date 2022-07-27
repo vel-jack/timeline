@@ -28,6 +28,7 @@ func _ready():
 		dir.list_dir_begin()
 		dir.get_next()
 		var file = dir.get_next()
+		print(file)
 		Common.audio_path = 'res://Audio/'+file.replace('.import','')
 	audio_player.stream = load(Common.audio_path)
 	audio_length = audio_player.stream.get_length()
@@ -127,7 +128,10 @@ func add_tag(n):
 	var at = timeline.rect_size.x
 	var inst = tag_scene.instance()
 	inst.num = n
-	inst.at = int(at)
+	for i in tags_parent.get_children():
+		if i.at_time == str(int(cur_pos)):
+			i.queue_free()
+	inst.at_time = str(int(cur_pos))
 	inst.rect_position = Vector2(at-14,-16)
 	Common.tags[str(int(cur_pos))] = {
 		'body':n,
@@ -180,3 +184,11 @@ func refresh_tags():
 		inst.rect_position = Vector2((timeline_bg.rect_size.x* (int(key)/audio_length*100)/100) -14,-16)
 		inst.num = t['body']
 		tags_parent.add_child(inst)
+
+
+func _on_AudioPlayer_finished():
+	play.text = 'PLAY'
+	playing = false
+	audio_player.seek(0)
+	progress.value = 0
+	pass # Replace with function body.

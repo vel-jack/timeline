@@ -5,6 +5,7 @@ onready var body = $Control/body
 onready var eyes = $Control/eyes
 onready var audio = $AudioStreamPlayer
 onready var anim = $AnimationPlayer
+onready var bg = $bg
 
 func _ready():
 	audio.stream = load(Common.audio_path)
@@ -20,7 +21,31 @@ func _unhandled_input(event):
 		else:
 			audio.play()
 
+var key_down = false
 
+func _unhandled_key_input(event):
+	if event.scancode == KEY_SPACE:
+		return
+	if event.pressed:
+		if not key_down:
+			key_down = true
+			match event.scancode:
+				KEY_1:
+					bg.modulate = Color.black
+				KEY_2:
+					bg.modulate = Color.whitesmoke
+				KEY_3:
+					bg.modulate = Color.skyblue
+				KEY_4:
+					bg.modulate = Color.cornflower
+				KEY_5:
+					bg.modulate = Color.indianred
+				KEY_6:
+					bg.modulate = Color.darkseagreen
+				KEY_7:
+					bg.modulate = Color.green
+	else:
+		key_down = false
 
 # warning-ignore:unused_argument
 func _process(delta):
